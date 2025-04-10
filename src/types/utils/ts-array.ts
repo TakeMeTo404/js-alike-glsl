@@ -20,6 +20,14 @@ type OnlyOfElements<T extends unknown[], Elements extends unknown[]> =
 export type ConsistsOnlyOfElements<T extends unknown[], Elements extends unknown[]> =
     T & OnlyOfElements<T, Elements>
 
+export type ArrayOfLength<T extends unknown, N extends number> =
+    N extends 0 ? [] :
+    N extends 1 ? [T] :
+    N extends 2 ? [T, T] :
+    N extends 3 ? [T, T, T] :
+    N extends 4 ? [T, T, T, T] :
+    never
+
 type Tests = [
     Expect<Equal<ConsistsOnlyOfElements<[], []>, []>>,
     Expect<Equal<ConsistsOnlyOfElements<[], [0, 1, '2', true]>, []>>,

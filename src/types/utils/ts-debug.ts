@@ -1,6 +1,6 @@
 export type Expect<T extends true> = T
 
-export type Not<T extends false> = true
+export type Not<_ extends false> = true
 
 type ShapesEqual<T, U> = [T] extends [U]
   ? [U] extends [T]
