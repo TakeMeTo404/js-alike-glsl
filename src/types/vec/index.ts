@@ -5,15 +5,14 @@ import { Get_XYZW_Selection, Get_RGBA_Selection } from './get'
 import { Set_XYZW_Selection, Set_RGBA_Selection } from './set'
 import { operations } from '@const'
 import { ConstructorArgs } from './constructor'
+import { Prettify } from '../utils/ts-object'
 
-// examples:
-// vec2(7, -7)['+'](3)   -->   vec2(10, -4)
-// vec3(1)[-](vec3(8))   -->   vec3(-7, -7, -7)
-// const color = vec3(255, 0, 0);  color['/='](2);  color.get('rgb')  -->   vec3(127.5, 0, 0)
-type OperatorProperties<N extends 2 | 3 | 4> = {
-    [_ in keyof typeof operations]: (other: number | VecN<N>) => VecN<N>
-} & {
-    [_ in keyof typeof operations as `${_}=`]: (other: number | VecN<N>) => void
+type BasicOperation = keyof typeof operations
+type BasicAssignOperation = `${BasicOperation}=`
+
+type CallSignatues<N extends 2 | 3 | 4> = {
+    <T extends BasicOperation | BasicAssignOperation>(op: T, other: number | VecN<N>):
+        T extends BasicOperation ? VecN<N> : void
 }
 
 type Vec<N extends 2 | 3 | 4> = {
@@ -30,7 +29,7 @@ type Vec<N extends 2 | 3 | 4> = {
         value: VecN<Length<T>>
     ) => VecN<N>
 
-} & OperatorProperties<N> & Record<AnyNumberZeroToN<N>, number>
+} & CallSignatues<N> & Record<AnyNumberZeroToN<N>, number>
 
 export type Vec2 = Vec<2>
 export type Vec3 = Vec<3>
@@ -42,3 +41,5 @@ type VecN<T extends number> =
     T extends 3 ? Vec3 :
     T extends 4 ? Vec4 :
     never
+
+export type GenVectorType = number | Vec2 | Vec3 | Vec4
