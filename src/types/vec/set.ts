@@ -1,4 +1,4 @@
-import { rgba, xyzw } from "@const";
+import { rgba, xyzw } from "../../const";
 import { ConsistsOfUniqueChars, ConsistsOnlyOfChars, LengthInRange } from "../utils/ts-string";
 import { AnyNumberZeroToN } from "../utils/ts-number";
 import { Equal, Expect, Not } from "../utils/ts-debug";
@@ -24,17 +24,17 @@ export type Set_RGBA_Selection<T extends string, N extends 2 | 3 | 4> =
     N extends 4 ? SetSelection<T, typeof rgba[AnyNumberZeroToN<4>], 1, 4> :
         never
 
-vec2(0).set('x', 2)
-vec2(0).set('y', 2)
-vec2(0).set('yx', vec2(1))
+// vec2(0).set('x', 2)
+// vec2(0).set('y', 2)
+// vec2(0).set('yx', vec2(1))
 
-vec3(0).set('x', 2)
-vec3(0).set('y', 2)
-vec3(0).set('xy', vec2(-1))
-vec3(0).set('yx', vec2(0))
-vec3(0).set('zx', vec2(0))
-vec3(0).set('zyx', vec3(0))
-vec3(0).set('yxz', vec3(-1))
+// vec3(0).set('x', 2)
+// vec3(0).set('y', 2)
+// vec3(0).set('xy', vec2(-1))
+// vec3(0).set('yx', vec2(0))
+// vec3(0).set('zx', vec2(0))
+// vec3(0).set('zyx', vec3(0))
+// vec3(0).set('yxz', vec3(-1))
 
 type Tests = [
     Expect<Equal<Set_XYZW_Selection<'x', 3>, 'x'>>,

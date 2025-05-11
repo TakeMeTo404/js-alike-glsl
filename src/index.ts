@@ -1,67 +1,70 @@
-import { BinaryOperator, UnaryOperator, Operator } from './types/operators'
+import { max, mix } from './types/operators'
 import type { GenVectorType, Vec2, Vec3, Vec4 } from './types/vec'
 import { ConstructorArgs } from './types/vec/constructor'
+import { is, vec2, vec3, vec4 } from './vec'
 
-declare global {
-    const vec2: (...args: ConstructorArgs<2>) => Vec2
-    const vec3: (...args: ConstructorArgs<3>) => Vec3
-    const vec4: (...args: ConstructorArgs<4>) => Vec4
+const toString = (v: GenVectorType): string => {
+    if (typeof v === 'number') {
+        return `Number(${v})`
+    }
+    else if (is.vec2(v)) {
+        return `vec2(${v[0]}, ${v[1]})`
+    }
+    else if (is.vec3(v)) {
+        return `vec3(${v[0]}, ${v[1]}, ${v[2]})`
+    }
+    else if (is.vec4(v)) {
+        return `vec4(${v[0]}, ${v[1]}, ${v[2]}, ${v[3]})`
+    }
+    throw new Error()
 }
 
+toString.haha = 'hahaha'
 
-declare global {
-    const sin: UnaryOperator
-    // const pow: UnaryOperator<1>
+console.log(toString    )
 
-    const max: BinaryOperator
-    const mix: BinaryOperator<1>
-}
 
-// GEOMETRIC FUNCTIONS
-declare global {
-    const len: <T extends GenVectorType>(v: T) => number
-    const distance: <T extends GenVectorType>(v1: T, v2: T) => number
-    const dot: <T extends GenVectorType>(v1: T, v2: T) => number
-    const cross: (v1: Vec3, v2: Vec3) => Vec3
-    const normalize: <T extends GenVectorType>(v: T) => T
-    // TODO: faceforward, reflect, refract
-}
 
-declare global {
-    const pow: Operator<GenVectorType, ['vec-or-num'], 'vec'>
-}
 
-const red = vec3({ r: 255, g: 0, b: 0 })
-const green = vec3(0).set('g', 255)
+let red = vec3({ r: 255, g: 0, b: 0 })
+const green = vec3(0)
+green.set('g', 255)
 const blue = vec3(0, 0, 255)
 
-const violet: Vec3 = max(red, blue)
+console.log('red\t', toString(red))
+console.log('green\t', toString(green))
+console.log('blue\t', toString(blue))
+
+
+// const violet: Vec3 = max(red, blue)
 
 // линейная интерполяция между цветами
-requestAnimationFrame(function loop() {
+// requestAnimationFrame(function loop() {
 
-    const seconds = Date.now() / 1000
+//     const seconds = Date.now() / 1000
 
-    let t = Math.sin(seconds)
-    t = (t + 1) / 2
-    // now t between 0 and 1
+//     let t = Math.sin(seconds)
+//     t = (t + 1) / 2
+//     // now t between 0 and 1
 
-    const fromRedToGreen = mix(red, green, vec3(t))
+//     const fromRedToGreen = mix(red, green, vec3(t))
 
-    someDiv.style.backgroundColor = toCssColor(fromRedToGreen)
+//     someDiv.style.backgroundColor = toCssColor(fromRedToGreen)
 
-    requestAnimationFrame(loop)
-})
-declare const someDiv: HTMLDivElement
-declare const toCssColor: (vec3: Vec3) => string
+//     requestAnimationFrame(loop)
+// })
+// declare const someDiv: HTMLDivElement
+// declare const toCssColor: (vec3: Vec3) => string
 
-const up = vec2(0, 1)
-const right = vec2(1, 0)
-const down = vec2(0, -1)
-const left = vec2(-1, 0)
+console.log('hello')
+console.log(vec2(1))
+// const up = vec2(0, 1)
+// const right = vec2(1, 0)
+// const down = vec2(0, -1)
+// const left = vec2(-1, 0)
 
 // two up, three left
-const jump = up('*', 2)('+', left('*', 3))
+// const jump = up('*', 2)('+', left('*', 3))
 
 // M на N, где M – количество строк, N – количество столбцов
 

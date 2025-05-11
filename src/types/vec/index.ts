@@ -3,7 +3,7 @@ import { ArrayOfLength } from '../utils/ts-array'
 import { AnyNumberZeroToN } from '../utils/ts-number'
 import { Get_XYZW_Selection, Get_RGBA_Selection } from './get'
 import { Set_XYZW_Selection, Set_RGBA_Selection } from './set'
-import { operations } from '@const'
+import { operations } from '../../const'
 import { ConstructorArgs } from './constructor'
 import { Prettify } from '../utils/ts-object'
 
@@ -25,17 +25,17 @@ type Vec<N extends 2 | 3 | 4> = {
     ) => VecN<Length<T>>
 
     set: <T extends string>(
-        selection: Get_XYZW_Selection<T, N> | Get_RGBA_Selection<T, N>,
+        selection: Set_XYZW_Selection<T, N> | Set_RGBA_Selection<T, N>,
         value: VecN<Length<T>>
-    ) => VecN<N>
+    ) => void
 
-} & CallSignatues<N> & Record<AnyNumberZeroToN<N>, number>
+} /*& CallSignatues<N>*/ & Record<AnyNumberZeroToN<N>, number>
 
 export type Vec2 = Vec<2>
 export type Vec3 = Vec<3>
 export type Vec4 = Vec<4>
 
-type VecN<T extends number> =
+export type VecN<T extends number> =
     T extends 1 ? number :
     T extends 2 ? Vec2 :
     T extends 3 ? Vec3 :
@@ -43,3 +43,9 @@ type VecN<T extends number> =
     never
 
 export type GenVectorType = number | Vec2 | Vec3 | Vec4
+
+// const v2 = vec2(10, -5)
+
+// const res = v2.get('xxx')
+
+// if ()

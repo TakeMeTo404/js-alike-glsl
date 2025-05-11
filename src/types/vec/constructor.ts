@@ -1,15 +1,15 @@
-import { rgba, xyzw } from "@const";
+import { rgba, xyzw } from "../../const";
 import { AnyNumberZeroToN } from "../utils/ts-number";
 import type { Vec2, Vec3, Vec4 } from '.'
 import { ArrayOfLength } from "../utils/ts-array";
 
-type XYZW_ContructorArgs<N extends 2 | 3 | 4> =
+export type XYZW_ContructorArgs<N extends 2 | 3 | 4> =
     N extends 2 ? Record<typeof xyzw[AnyNumberZeroToN<2>], number> :
     N extends 3 ? Record<typeof xyzw[AnyNumberZeroToN<3>], number> :
     N extends 4 ? Record<typeof xyzw[AnyNumberZeroToN<4>], number> :
     never
 
-type RGBA_ContructorArgs<N extends 2 | 3 | 4> =
+export type RGBA_ContructorArgs<N extends 2 | 3 | 4> =
     N extends 2 ? Record<typeof rgba[AnyNumberZeroToN<2>], number> :
     N extends 3 ? Record<typeof rgba[AnyNumberZeroToN<3>], number> :
     N extends 4 ? Record<typeof rgba[AnyNumberZeroToN<4>], number> :
