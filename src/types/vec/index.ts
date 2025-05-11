@@ -10,7 +10,7 @@ import { Prettify } from '../utils/ts-object'
 type BasicOperation = keyof typeof operations
 type BasicAssignOperation = `${BasicOperation}=`
 
-type CallSignatues<N extends 2 | 3 | 4> = {
+export type CallableVector<N extends 2 | 3 | 4> = {
     <T extends BasicOperation | BasicAssignOperation>(op: T, other: number | VecN<N>):
         T extends BasicOperation ? VecN<N> : void
 }
@@ -29,7 +29,7 @@ type Vec<N extends 2 | 3 | 4> = {
         value: VecN<Length<T>>
     ) => void
 
-} /*& CallSignatues<N>*/ & Record<AnyNumberZeroToN<N>, number>
+} & CallableVector<N> & Record<AnyNumberZeroToN<N>, number>
 
 export type Vec2 = Vec<2>
 export type Vec3 = Vec<3>

@@ -1,7 +1,7 @@
 import { ConstructorArgs, RGBA_ContructorArgs, XYZW_ContructorArgs } from "./types/vec/constructor";
-import type { GenVectorType, Vec2, Vec3, Vec4, VecN } from './types/vec'
+import type { CallableVector, GenVectorType, Vec2, Vec3, Vec4, VecN } from './types/vec'
 import { ArrayOfLength } from "./types/utils/ts-array";
-import { rgba, xyzw } from "./const";
+import { operations, rgba, xyzw } from "./const";
 import { Get_XYZW_Selection, Get_RGBA_Selection } from './types/vec/get'
 import { Length } from './types/utils/ts-string'
 import { AnyNumberZeroToN } from "./types/utils/ts-number";
@@ -46,7 +46,7 @@ const isNumberRecord = <K extends string>(v: unknown, keys: K[]): v is Record<K,
 export const is = {
     vecN: <N extends 2 | 3 | 4> (n: N) => (v: unknown): v is VecN<N> => {
         return !!v
-            && typeof v === 'object'
+            && (typeof v === 'object' || typeof v === 'function')
             && 'values' in v
             && isNumberArrayOfLength(v['values'], n)
     },
@@ -116,10 +116,52 @@ const indexSignature = <N extends 2 | 3 | 4> (n: N, values: ArrayOfLength<number
      return o
 }
 
+const defineIndexProperties = (vec: object, values: number[]): void => {
+    for (let i = 0; i < values.length; i++) {
+        Object.defineProperty(vec, i, {
+            get() {
+                return values[i]
+            },
+
+            set(v) {
+                values[i] = v
+            }
+        })
+    }
+}
 
 
 const _vec2 = (values: [number, number]): Vec2 => {
-    let v: Vec2 = indexSignature(2, values) as Vec2
+
+    const v: Vec2 = ((op, other) => {
+
+        const isAssignOperation = !(op in operations)
+
+        let foo: (a: number, b: number) => number
+        if (isAssignOperation) {
+           foo = (operations as any)[op[0]]
+        } else {
+            foo = (operations as any)[op]
+        }
+
+        const otherAt: (i: 0 | 1) => number =
+            typeof other === 'number' ?
+                () => other :
+                (i) => other[i]
+
+        const _0 = foo(values[0], otherAt(0))
+        const _1 = foo(values[1], otherAt(1))
+
+        if (isAssignOperation) {
+            values[0] = _0
+            values[1] = _1
+        } else {
+            return _vec2([_0, _1])
+        }
+    }) as CallableVector<2> as Vec2
+
+
+    defineIndexProperties(v, values)
 
     v.values = values
     v.copy = () => _vec2([...values])
@@ -172,40 +214,6 @@ export const vec2 = (...args: ConstructorArgs<2>): Vec2 => {
     }
 
     return _vec2(values)
-
-    // return {
-    //    values,
-    //    copy: () => vec2(...values),
-    //    get: (selection) => {
-    //        const iArr = selectionToIndexes(selection)
-    //        const vArr = iArr.map(i => values[i])
-
-    //        switch (selection.length) {
-    //            case 1: return vArr[0] as VecN<Length<typeof selection>>
-    //            case 2: return vec2(...vArr as ArrayOfLength<number, 2>) as VecN<Length<typeof selection>>
-    //            case 3: return vec3(...vArr as ArrayOfLength<number, 3>) as VecN<Length<typeof selection>>
-    //            case 4: return vec4(...vArr as ArrayOfLength<number, 4>) as VecN<Length<typeof selection>>
-    //            default: throw new RangeError()
-    //        }
-    //    },
-    //    set: (selection, v) => {
-    //        const iArr = selectionToIndexes(selection)
-
-    //        switch (selection.length) {
-    //            case 1:
-    //                 values[iArr[0]] = v as number
-    //                 break
-    //             case 2:
-    //                 [0, 1].forEach(i => {
-    //                     values[iArr[i]] = (v as Vec2).values[i]
-    //                 })
-    //                 break
-    //             default: throw new RangeError()
-    //        }
-    //    },
-
-    //    ...indexSignature(2, values)
-    // }
 }
 
 const _vec3 = (values: [number, number, number]): Vec3 => {
@@ -369,5 +377,5 @@ export const vec4 = (...args: ConstructorArgs<4>): Vec4 => {
        },
 
        ...indexSignature(4, values)
-    }
+    } as Vec4
 }
