@@ -57,3 +57,30 @@ const vecN = <N extends 2 | 3 | 4>(n: N) => (...args: ConstructorArgs<N>): VecN<
         values,
     }
     }*/
+
+    // линейная интерполяция между цветами
+    // requestAnimationFrame(function loop() {
+
+    //     const seconds = Date.now() / 1000
+
+    //     let t = Math.sin(seconds)
+    //     t = (t + 1) / 2
+    //     // now t between 0 and 1
+
+    //     const fromRedToGreen = mix(red, green, vec3(t))
+
+    //     someDiv.style.backgroundColor = toCssColor(fromRedToGreen)
+
+    //     requestAnimationFrame(loop)
+    // })
+    // declare const someDiv: HTMLDivElement
+    // declare const toCssColor: (vec3: Vec3) => string
+
+    // M на N, где M – количество строк, N – количество столбцов
+    // mat3x3.set(0, vec3(7))
+    // mat3x3.set([0, 1], [vec3(7), vec3(-7)]) // set 1 column to sevens, second column to minus-sevens
+    // mat3x3.set([0, 1], someMat2x3)
+    // mat3x3.set(0, vec3(7))
+    // mat3x3.set(0, vec3(7))
+    // mat3x3.set(0, vec3(7))
+    // mat3x3.set(0, vec3(7))
