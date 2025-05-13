@@ -43,9 +43,3 @@ export type VecN<T extends number> =
     never
 
 export type GenVectorType = number | Vec2 | Vec3 | Vec4
-
-// const v2 = vec2(10, -5)
-
-// const res = v2.get('xxx')
-
-// if ()

@@ -1,15 +1,27 @@
 {
-  "name": "glsl-alike-vec",
+  "name": "glsl-alike",
   "version": "1.0.0",
-  "main": "index.js",
-  "scripts": {
-    "build": "tsc"
+  "main": "./dist/glsl-alike.umd.js",
+  "module": "./dist/glsl-alike.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+      ".": {
+          "import": "./dist/glsl-alike.mjs",
+          "require": "./dist/glsl-alike.umd.js"
+      }
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
+  "files": [
+      "dist"
+  ],
+  "scripts": {
+    "build": "tsc --noEmit && vite build",
+    "test": "vitest"
+  },
   "devDependencies": {
-    "typescript": "^5.8.2"
+    "@types/node": "^22.15.17",
+    "typescript": "^5.8.2",
+    "vite": "^6.3.5",
+    "vite-plugin-dts": "^4.5.3",
+    "vitest": "^3.1.3"
   }
 }
