@@ -48,3 +48,7 @@ export type MatMxN<M extends number, N extends number> =
         N extends 4 ? Mat4 :
         never :
     never
+
+export type MatCreateArgs<M extends 2 | 3 | 4, N extends 2 | 3 | 4> =
+    | [number]
+    | ArrayOfLength<VecN<N>, M>

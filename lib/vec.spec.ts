@@ -162,7 +162,6 @@ describe('vec', () => {
         v2.set('xy', vec2(z, w))
         expect(v2Values).toEqual([z, w])
         expect(v2.values).toEqual([z, w])
-
     })
 
     it('vec values are mutable', () => {

@@ -1,18 +1,16 @@
-import { rgba, xyzw } from "../../const";
-import { AnyNumberZeroToN } from "../utils/ts-number";
-import type { Vec2, Vec3, Vec4 } from '.'
+import type { Vec2, Vec3 } from '.'
 import { ArrayOfLength } from "../utils/ts-array";
 
 export type XYZW_ContructorArgs<N extends 2 | 3 | 4> =
-    N extends 2 ? Record<typeof xyzw[AnyNumberZeroToN<2>], number> :
-    N extends 3 ? Record<typeof xyzw[AnyNumberZeroToN<3>], number> :
-    N extends 4 ? Record<typeof xyzw[AnyNumberZeroToN<4>], number> :
+    N extends 2 ? Record<'x' | 'y', number> :
+    N extends 3 ? Record<'x' | 'y' | 'z', number> :
+    N extends 4 ? Record<'x' | 'y' | 'z' | 'w', number> :
     never
 
 export type RGBA_ContructorArgs<N extends 2 | 3 | 4> =
-    N extends 2 ? Record<typeof rgba[AnyNumberZeroToN<2>], number> :
-    N extends 3 ? Record<typeof rgba[AnyNumberZeroToN<3>], number> :
-    N extends 4 ? Record<typeof rgba[AnyNumberZeroToN<4>], number> :
+    N extends 2 ? Record<'r' | 'g', number> :
+    N extends 3 ? Record<'r' | 'g' | 'b', number> :
+    N extends 4 ? Record<'r' | 'g' | 'b' | 'a', number> :
     never
 
 type FromSmallerVectorAndNumber<N extends 2 | 3 | 4> =

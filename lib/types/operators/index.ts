@@ -1,7 +1,7 @@
 import { MatMxN, Mat, Mat3, Mat2, Mat3x2, Mat2x3 } from "../mat"
 import { ArrayOfLength } from "../utils/ts-array"
 import { Sum } from "../utils/ts-number"
-import type { GenVectorType, Vec2, Vec3, Vec4 } from "../vec"
+import type { Vec2, Vec3, Vec4 } from "../vec"
 
 type _<T extends number | Vec2 | Vec3 | Vec4> =
     T extends number ? number : T

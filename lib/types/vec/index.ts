@@ -41,5 +41,3 @@ export type VecN<T extends number> =
     T extends 3 ? Vec3 :
     T extends 4 ? Vec4 :
     never
-
-export type GenVectorType = number | Vec2 | Vec3 | Vec4
